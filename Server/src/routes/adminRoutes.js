@@ -9,3 +9,5 @@ router.use('/client/:id',(req,res) =>{
 router.use('/product',(req,res) =>{
 
 });
+
+export default router;

@@ -13,3 +13,5 @@ router.use('/register',(req,res) =>{
 router.use('/refresh',(req,res) =>{
 
 });
+
+export default router;

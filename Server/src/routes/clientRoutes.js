@@ -25,3 +25,5 @@ router.use('/product',(req,res) =>{
 router.use('/product/:id',(req,res) =>{
 
 });
+
+export default router;
