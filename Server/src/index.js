@@ -11,7 +11,7 @@ import mongoose from 'mongoose';
 dotenv.config({path: 'config/.env'});
 const HTTP_PORT = process.env.HTTP_PORT || 3003;
 
-const adminRoute = "/api/user";
+const adminRoute = "/api/admin";
 const clientRoute = "/api/client";
 const userRoute = "/api/user";
 
