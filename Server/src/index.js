@@ -5,10 +5,10 @@ import adminRoutes from './routes/adminRoutes.js'
 import clientRoutes from './routes/clientRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import { authenticateToken } from './middlewares/authMiddleware.js';
-import mongoose from 'mongoose';
+import {connectDB} from './utils/db.js';
 
 
-dotenv.config({path: 'config/.env'});
+dotenv.config({path: '/config/.env'});
 const HTTP_PORT = process.env.HTTP_PORT || 3003;
 
 const adminRoute = "/api/admin";
@@ -16,7 +16,7 @@ const clientRoute = "/api/client";
 const userRoute = "/api/user";
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/e-commerce');
+connectDB();
 
 app.use(cors({
     origin:"NO LO SE POR EL MOMENTO XD",
