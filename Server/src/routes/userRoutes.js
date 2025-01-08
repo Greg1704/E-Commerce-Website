@@ -3,17 +3,15 @@ import * as userMethods from '../controllers/loginController.js'
 
 const router = express.Router();
 
-router.use('/login',(req,res) =>{
+router.post('/login',(req,res) =>{
 
 });
 
-router.use('/register',(req,res) =>{
-    userMethods.registerUser("gregorio","pedosoo");
-    res.writeHead(200);
-    res.end();
+router.post('/register',(req,res,next) =>{
+    userMethods.registerUser(req,res,next);
 });
 
-router.use('/refresh',(req,res) =>{
+router.post('/refresh',(req,res) =>{
 
 });
 
