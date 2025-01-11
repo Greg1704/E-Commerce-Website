@@ -11,15 +11,27 @@ import path from 'path';
 import CustomError from './utils/CustomError.js';
 import globalErrorHandler from './controllers/errorController.js'
 
-dotenv.config({path: path.resolve('config/.env')});
+dotenv.config({path: path.resolve('src/config/.env')});
 const HTTP_PORT = process.env.HTTP_PORT || 3003;
 
 const adminRoute = "/api/admin";
 const clientRoute = "/api/client";
 const userRoute = "/api/user";
 
+process.on('uncaughtException',(err) =>{
+    console.log(err.name,err.message);
+    console.log("Uncaught Exception occured! Shutting down ...");
+    process.exit(1);
+})
+
+process.on('unhandledRejection',(err) =>{
+    console.log(err.name,err.message);
+    console.log("Unhandled Rejection occured! Shutting down ...");
+    process.exit(1);
+})
+
 const app = express();
-connectDB();
+connectDB(app);
 
 app.use(cors({
     origin:"NO LO SE POR EL MOMENTO XD",
@@ -37,6 +49,7 @@ app.all('*',(req,res,next) =>{
 }); //Every route that doesnt exist will be here
 
 app.use(globalErrorHandler);
+
 
 app.listen(HTTP_PORT, () => {
     console.log(`Servidor escuchando en puerto ${HTTP_PORT}`);
