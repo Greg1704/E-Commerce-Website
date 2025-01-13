@@ -2,11 +2,19 @@ import express from 'express';
 
 const router = express.Router();
 
-router.use('/client/:id',(req,res) =>{
+router.route('/client/:id')
+.get((req,res,next) =>{
+
+})
+.delete((req,res,next) =>{
 
 });
 
-router.use('/product',(req,res) =>{
+router.route('/product')
+.post((req,res,next) =>{
+
+})
+.delete((req,res,next) =>{
 
 });
 

@@ -7,14 +7,14 @@ export const authenticateToken = (req, res, next) => {
     const token = authHeader && authHeader.split(' ')[1]; //Separamos el token del Bearer
 
     if (!token){
-        res.writeHead(401,'Acceso denegado, falta el token')
-        return res.end()
+        const error = new CustomError('Access denied, lack of token',401);
+        return next(error);
     }
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err){
-            res.writeHead(403,'Token inválido')
-            return res.end()
+            const error = new CustomError('Invalid token',403);
+            return next(error);
         }
         next();
     });

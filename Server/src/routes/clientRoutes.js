@@ -2,27 +2,63 @@ import express from 'express';
 
 const router = express.Router();
 
-router.use('/cart',(req,res) =>{
+router.route('/cart')
+.get((req,res,next) =>{
+
+})
+.delete((req,res,next) =>{
 
 });
 
-router.use('/cart/:id',(req,res) =>{
+router.route('/cart/:id')
+.get((req,res,next) =>{
+
+})
+.post((req,res,next) =>{
+
+})
+.patch((req,res,next) =>{
+
+})
+.delete((req,res,next) =>{
 
 });
 
-router.use('/sell',(req,res) =>{
+router.route('/sell')
+.get((req,res,next) =>{
+
+})
+.post((req,res,next) =>{
+
+})
+.patch((req,res,next) =>{
+
+})
+.delete((req,res,next) =>{
 
 });
 
-router.use('/personalData',(req,res) =>{
+router.route('/personalData')
+.get((req,res,next) =>{
+
+})
+.post((req,res,next) =>{
+
+})
+.patch((req,res,next) =>{
+
+})
+.delete((req,res,next) =>{
 
 });
 
-router.use('/product',(req,res) =>{
+router.route('/product')
+.get((req,res,next) =>{
 
 });
 
-router.use('/product/:id',(req,res) =>{
+router.route('/product/:id')
+.get((req,res,next) =>{
 
 });
 
