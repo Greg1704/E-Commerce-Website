@@ -1,8 +1,10 @@
-import users from "../models/userModel.js";
+import models from "../models/userModel.js";
 import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import CustomError from "../utils/CustomError.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+
+const { users, clients, admins } = models;
 
 export const registerUser = asyncErrorHandler(async (req,res,next) =>{
     const authHeader = req.headers['authorization'];
@@ -11,7 +13,7 @@ export const registerUser = asyncErrorHandler(async (req,res,next) =>{
     const decodedArray = decoded.split(':');
     const username = decodedArray[0]; 
     const password = decodedArray[1]; 
-    const user = await users.create({username, password});
+    const user = await clients.create({username, password}); //Habria que adaptar esto para agregar todos los atributos que se encuentren
     res.status(201).json({
         status:200,
         data:{
