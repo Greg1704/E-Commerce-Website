@@ -42,57 +42,59 @@ userSchema.pre('save', async function(next) {
 const users = mongoose.model('users',userSchema);
 
 const clients = users.discriminator('clients', new mongoose.Schema({
-    full_name:{
+    full_name: {
         type: String,
         required: [true, "Full name is a required field"],
-        validate:{ 
-            validator: (value) => /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]$/.test(value),
+        validate: { 
+            validator: (value) => /^[a-zA-Z\s]+$/.test(value),
             message: "Full name should only include letters from the alphabet."
         }
     },
-    cellphone:{
+    cellphone: {
         type: String,
         required: [true, "Cellphone is a required field"],
-        validate:{ 
-            validator: (value) => /(?=.\d)(?=.[+])[\d@$!%*#?&]$/.test(value),
+        validate: { 
+            validator: (value) => /^\+?\d{7,15}$/.test(value),
             message: "Cellphone should only include numbers."
         }
     },
-    street_address:{
+    street_address: {
         type: String,
         required: [true, "Street address is a required field"]
     },
-    city:{
+    city: {
         type: String,
         required: [true, "City is a required field"]
     },
-    province:{
+    province: {
         type: String,
         required: [true, "Province/state is a required field"]
     },
-    country:{
+    country: {
         type: String,
         required: [true, "Country is a required field"]
     },
-    payment_method: new mongoose.Schema({
-        number: {
-            type: String,
-            required: [true, "Number is a required field"],
-            unique: [true, "Number already exists"],
-        },
-        security_code: {
-            type: String,
-            required: [true, "Security code is a required field"],
-        },
-        owner_name:{
-            type: String,
-            required: [true, "Owner's name is a required field"],
-            validate:{ 
-                validator: (value) => /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]$/.test(value),
-                message: "Owner's name should only include letters from the alphabet."
-            }
-        },
-    })
+    payment_method: {
+        type: new mongoose.Schema({
+            number: {
+                type: String,
+                required: [true, "Number is a required field"],
+            },
+            security_code: {
+                type: String,
+                required: [true, "Security code is a required field"],
+            },
+            owner_name: {
+                type: String,
+                required: [true, "Owner's name is a required field"],
+                validate: { 
+                    validator: (value) => /^[a-zA-Z\s]+$/.test(value),
+                    message: "Owner's name should only include letters from the alphabet."
+                }
+            },
+        }),
+        required: false,  // Hace que payment_method sea opcional
+    }
 }));
 
 const admins = users.discriminator('admins', new mongoose.Schema({

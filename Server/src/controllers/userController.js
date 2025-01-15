@@ -11,9 +11,10 @@ export const registerUser = asyncErrorHandler(async (req,res,next) =>{
     const encoded = authHeader && authHeader.split(' ')[1];
     const decoded = atob(encoded);
     const decodedArray = decoded.split(':');
-    const username = decodedArray[0]; 
+    const email = decodedArray[0]; 
     const password = decodedArray[1]; 
-    const user = await clients.create({username, password}); //Habria que adaptar esto para agregar todos los atributos que se encuentren
+    const {full_name, cellphone, street_address, city, province, country,payment_method} = req.body;
+    const user = await clients.create({email, password,full_name, cellphone, street_address, city, province, country,payment_method});
     res.status(201).json({
         status:200,
         data:{
@@ -27,13 +28,13 @@ export const loginUser = asyncErrorHandler(async (req,res,next) =>{
     const encoded = authHeader && authHeader.split(' ')[1];
     const decoded = atob(encoded);
     const decodedArray = decoded.split(':');
-    const username = decodedArray[0]; 
+    const email = decodedArray[0]; 
     const password = decodedArray[1]; 
 
-    const foundUser = await users.find({username: username});
+    const foundUser = await users.find({email: email});
 
     if(foundUser.length === 0){
-        const error = new CustomError("The username doesn't exist",404);
+        const error = new CustomError("The email wasn't found",404);
         return next(error);
     }
 
@@ -67,8 +68,8 @@ export const refreshUser = asyncErrorHandler(async (req,res,next) =>{
             const error = new CustomError("Access denied, invalid token",403);
             return next(error);
         } 
-        const username = req.body["username"];
-        const accessToken = jwt.sign({ id:username },process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '5m' });
+        const email = req.body["email"];
+        const accessToken = jwt.sign({ id:email },process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '5m' });
         res.status(200).json({
             status:200,
             message: "Successfull refresh",
