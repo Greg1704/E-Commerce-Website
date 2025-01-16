@@ -16,7 +16,6 @@ export const registerUser = asyncErrorHandler(async (req,res,next) =>{
     const {full_name, cellphone, street_address, city, province, country,payment_method} = req.body;
     const user = await clients.create({email, password,full_name, cellphone, street_address, city, province, country,payment_method});
     res.status(201).json({
-        status:200,
         data:{
             user
         }
@@ -44,7 +43,6 @@ export const loginUser = asyncErrorHandler(async (req,res,next) =>{
             const accessToken = jwt.sign({ id:foundUser[0]._id},process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '150m' }); //5 min
             const refreshToken = jwt.sign({ id:foundUser[0]._id}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '60m' });
             res.status(200).json({
-                status:200,
                 message: "Successfull login",
                 accessToken,
                 refreshToken
@@ -71,7 +69,6 @@ export const refreshUser = asyncErrorHandler(async (req,res,next) =>{
         const id = req.body["_id"];
         const accessToken = jwt.sign({ id:id },process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '5m' });
         res.status(200).json({
-            status:200,
             message: "Successfull refresh",
             accessToken,
             refreshToken

@@ -75,25 +75,28 @@ const clients = users.discriminator('clients', new mongoose.Schema({
         required: [true, "Country is a required field"]
     },
     payment_method: {
-        type: new mongoose.Schema({
-            number: {
-                type: String,
-                required: [true, "Number is a required field"],
-            },
-            security_code: {
-                type: String,
-                required: [true, "Security code is a required field"],
-            },
-            owner_name: {
-                type: String,
-                required: [true, "Owner's name is a required field"],
-                validate: { 
-                    validator: (value) => /^[a-zA-Z\s]+$/.test(value),
-                    message: "Owner's name should only include letters from the alphabet."
-                }
-            },
-        }),
-        required: false,  // Hace que payment_method sea opcional
+        type: [
+            new mongoose.Schema({
+                number: {
+                    type: String,
+                    required: [true, "Number is a required field"],
+                },
+                security_code: {
+                    type: String,
+                    required: [true, "Security code is a required field"],
+                },
+                owner_name: {
+                    type: String,
+                    required: [true, "Owner's name is a required field"],
+                    validate: { 
+                        validator: (value) => /^[a-zA-Z\s]+$/.test(value),
+                        message: "Owner's name should only include letters from the alphabet."
+                    }
+                },
+            })
+        ],
+        required: false,
+        default: []
     }
 }));
 

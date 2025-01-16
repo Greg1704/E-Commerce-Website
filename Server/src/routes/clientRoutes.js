@@ -54,13 +54,13 @@ router.route('/password')
 
 router.route('/payment_method')
 .get((req,res,next) =>{
-
+    clientMethods.getPaymentMethods(req,res,next);
 })
 .post((req,res,next) =>{
-
+    clientMethods.postPaymentMethod(req,res,next);
 })
 .delete((req,res,next) =>{
-
+    clientMethods.deletePaymentMethod(req,res,next);
 });
 
 router.route('/product')

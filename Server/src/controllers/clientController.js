@@ -58,7 +58,7 @@ export const patchPassword = asyncErrorHandler(async (req,res,next)=>{
     const codedPayload = token.split('.')[1];
     const payload = atob(codedPayload);
     const id = payload.split('"')[3]; 
-    const newPassword = JSON.stringify(req.body);
+    const {oldPassword,newPassword} = req.body;
 
     const foundUser = await users.findById(id);
 
@@ -66,9 +66,96 @@ export const patchPassword = asyncErrorHandler(async (req,res,next)=>{
         const error = new CustomError("The user doesn't exist",404);
         return next(error);
     }
-    foundUser.password = newPassword.split(":")[1].slice(1,-2);
-    await foundUser.save();
-    res.status(200).json({
-        message: "Password has been changed"
-    });
+
+    await bcrypt.compare(oldPassword,foundUser.password)
+    .then(isMatch =>{
+        if(!isMatch){
+            const error = new CustomError("The old password doesn't match yours",400);
+            return next(error);
+        }
+        foundUser.password = newPassword;
+        foundUser.save();
+        res.status(200).json({
+            message: "Password has been changed"
+        });
+    })
 });
+
+export const getPaymentMethods = asyncErrorHandler(async (req,res,next) =>{
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    const codedPayload = token.split('.')[1];
+    const payload = atob(codedPayload);
+    const id = payload.split('"')[3]; 
+
+    const foundUser = await users.findById(id);
+
+    if(!foundUser){
+        const error = new CustomError("The user doesn't exist",404);
+        return next(error);
+    }
+
+    if(!foundUser.payment_method){
+        const error = new CustomError("There aren't any payment methods linked to this account",200); //I mean, its not a mistake technically xd
+        return next(error);
+    }
+
+    res.status(200).json(
+        foundUser.payment_method
+    )
+})
+
+export const postPaymentMethod = asyncErrorHandler(async (req,res,next) =>{
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    const codedPayload = token.split('.')[1];
+    const payload = atob(codedPayload);
+    const id = payload.split('"')[3];
+    const newPaymentMethod = req.body;
+
+    const foundUser = await users.findById(id);
+
+    if(!foundUser){
+        const error = new CustomError("The user doesn't exist",404);
+        return next(error);
+    }
+
+    foundUser.payment_method.push(newPaymentMethod);
+    await foundUser.save({ validateModifiedOnly: true });
+
+    res.status(200).json({
+        message:"Payment method successfully added",
+        newPaymentMethod
+    })
+})
+
+export const deletePaymentMethod = asyncErrorHandler(async (req,res,next) =>{
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    const codedPayload = token.split('.')[1];
+    const payload = atob(codedPayload);
+    const id = payload.split('"')[3];
+    const {number} = req.body;
+    console.log(number)
+    const foundUser = await users.findById(id);
+
+    if(!foundUser){
+        const error = new CustomError("The user doesn't exist",404);
+        return next(error);
+    }
+
+    const foundPM = foundUser.payment_method.findIndex((pm) => pm.number === number);
+
+    if (foundPM === -1) {
+        const error = new CustomError("The payment method doesn't exist", 404);
+        return next(error);
+    }
+
+    // Elimina el método de pago usando el índice
+    foundUser.payment_method.splice(foundPM, 1);
+    await foundUser.save({ validateModifiedOnly: true });
+
+    res.status(200).json({
+        message:"Your payment method has been successfully removed"
+    })
+})
