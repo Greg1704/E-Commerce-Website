@@ -1,10 +1,8 @@
-import User from './models/userModel.js';
+const token = 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im1hcmlhbm9saW1hQGdtYWlsLmNvbSIsImlhdCI6MTczNjk1NzkzMSwiZXhwIjoxNzM2OTU4MjMxfQ.n-Nt7a8yRwPDGjIw8YMb6j7CLekDrDR_pk80MxrapjY";
 
-const testUser = new User({
-    username: "testuser",
-    password: "Password1"
-});
+const codedPayload = token.split('.')[1];
 
-testUser.save()
-    .then(() => console.log("Usuario creado exitosamente"))
-    .catch(err => console.error("Error:", err.message));
+const payload = atob(codedPayload);
+
+console.log(payload);

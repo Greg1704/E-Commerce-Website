@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import CustomError from "../utils/CustomError.js";
 
 
 //Metodo el cual se encarga de autenticar el access token cada vez que llega una request

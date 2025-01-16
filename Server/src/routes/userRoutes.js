@@ -1,5 +1,5 @@
 import express from 'express';
-import * as userMethods from '../controllers/userController.js'
+import * as userMethods from '../controllers/userController.js';
 
 const router = express.Router();
 

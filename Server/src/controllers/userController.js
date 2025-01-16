@@ -21,7 +21,7 @@ export const registerUser = asyncErrorHandler(async (req,res,next) =>{
             user
         }
     })
-})
+});
 
 export const loginUser = asyncErrorHandler(async (req,res,next) =>{
     const authHeader = req.headers['authorization'];
@@ -41,8 +41,8 @@ export const loginUser = asyncErrorHandler(async (req,res,next) =>{
     bcrypt.compare(password,foundUser[0].password)
     .then(isMatch =>{
         if(isMatch){
-            const accessToken = jwt.sign({ id:foundUser[0]._id },process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '5m' }); //5 min
-            const refreshToken = jwt.sign({ id:foundUser[0]._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '60m' });
+            const accessToken = jwt.sign({ id:foundUser[0]._id},process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '150m' }); //5 min
+            const refreshToken = jwt.sign({ id:foundUser[0]._id}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '60m' });
             res.status(200).json({
                 status:200,
                 message: "Successfull login",
@@ -54,7 +54,7 @@ export const loginUser = asyncErrorHandler(async (req,res,next) =>{
             return next(error);
         }
     });
-})
+});
 
 export const refreshUser = asyncErrorHandler(async (req,res,next) =>{
     const authHeader = req.headers['authorization'];
@@ -68,8 +68,8 @@ export const refreshUser = asyncErrorHandler(async (req,res,next) =>{
             const error = new CustomError("Access denied, invalid token",403);
             return next(error);
         } 
-        const email = req.body["email"];
-        const accessToken = jwt.sign({ id:email },process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '5m' });
+        const id = req.body["_id"];
+        const accessToken = jwt.sign({ id:id },process.env.ACCESS_TOKEN_SECRET ,{ expiresIn: '5m' });
         res.status(200).json({
             status:200,
             message: "Successfull refresh",
@@ -77,4 +77,4 @@ export const refreshUser = asyncErrorHandler(async (req,res,next) =>{
             refreshToken
         })
     });
-})
+});
