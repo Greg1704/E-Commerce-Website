@@ -66,6 +66,12 @@ router.route('/payment_method')
 router.route('/product')
 .get((req,res,next) =>{
 
+})
+.post((req,res,next) =>{
+    clientMethods.postPaymentMethod(req,res,next);
+})
+.delete((req,res,next) =>{
+    clientMethods.deletePaymentMethod(req,res,next);
 });
 
 router.route('/product/:id')
