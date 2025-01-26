@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import models from "../models/userModel.js";
+import products from "../models/productModel.js";
 
 const { users, clients, admins } = models;
 

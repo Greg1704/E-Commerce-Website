@@ -10,7 +10,7 @@ router.route('/client/:id')
 
 });
 
-router.route('/pendingProduct')
+router.route('/pendingProduct/:id')
 .get((req,res,next) =>{
 
 })

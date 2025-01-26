@@ -1,5 +1,6 @@
 import express from 'express';
 import * as clientMethods from '../controllers/clientController.js';
+import * as productMethods from '../controllers/productController.js';
 
 const router = express.Router();
 
@@ -68,15 +69,23 @@ router.route('/product')
 
 })
 .post((req,res,next) =>{
-    clientMethods.postPaymentMethod(req,res,next);
-})
-.delete((req,res,next) =>{
-    clientMethods.deletePaymentMethod(req,res,next);
+    productMethods.postProduct(req,res,next);
 });
 
 router.route('/product/:id')
 .get((req,res,next) =>{
+    productMethods.getProduct(req,res,next);
+})
+.delete((req,res,next) =>{
+    productMethods.deleteProduct(req,res,next);
+});
 
+router.route('/product/:id/review')
+.get((req,res,next) =>{
+    productMethods.getReview(req,res,next);
+})
+.post((req,res,next) =>{
+    productMethods.postReview(req,res,next);
 });
 
 export default router;

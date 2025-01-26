@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
         minlength: [30, "Description must be at least 11 characters"],
         maxlength: [300, "Description must be at most 35 characters"],
     },
-    opinion: {
+    review: {
             type: [
                 new mongoose.Schema({
                     Title: {
@@ -31,5 +31,29 @@ const productSchema = new mongoose.Schema({
             ],
             required: false,
             default: []
-        }
+    },
+    picture: {
+            type: [
+                new mongoose.Schema({
+                    fileName: {
+                      type: String,
+                      required: true,
+                    },
+                    file: {
+                      data: Buffer,
+                      contentType: String,
+                    },
+                    uploadTime: {
+                      type: Date,
+                      default: Date.now,
+                    },
+                  })
+            ],
+            required: false,
+            default: []
+    }
 })
+
+const products = mongoose.model('products',productSchema);
+
+export default products;

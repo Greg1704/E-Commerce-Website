@@ -7,7 +7,6 @@ import userRoutes from './routes/userRoutes.js'
 import { authenticateToken } from './middlewares/authMiddleware.js';
 import {connectDB} from './utils/db.js';
 import path from 'path';
-
 import CustomError from './utils/CustomError.js';
 import globalErrorHandler from './controllers/errorController.js'
 
