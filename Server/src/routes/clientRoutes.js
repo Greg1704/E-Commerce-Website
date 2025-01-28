@@ -8,9 +8,6 @@ router.route('/cart')
 .get((req,res,next) =>{
     productMethods.getCart(req,res,next);
 })
-.delete((req,res,next) =>{
-
-});
 
 router.route('/cart/:id')
 .post((req,res,next) =>{
