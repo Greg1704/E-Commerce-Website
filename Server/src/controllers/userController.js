@@ -1,4 +1,5 @@
 import models from "../models/userModel.js";
+import carts from "../models/cartModel.js";
 import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import CustomError from "../utils/CustomError.js";
 import bcrypt from 'bcrypt';
@@ -15,10 +16,13 @@ export const registerUser = asyncErrorHandler(async (req,res,next) =>{
     const password = decodedArray[1]; 
     const {full_name, cellphone, street_address, city, province, country,payment_method} = req.body;
     const user = await clients.create({email, password,full_name, cellphone, street_address, city, province, country,payment_method});
+
+    const id = user._id;
+
+    const cart = await carts.create({clientId: id});
+
     res.status(201).json({
-        data:{
-            user
-        }
+        user
     })
 });
 

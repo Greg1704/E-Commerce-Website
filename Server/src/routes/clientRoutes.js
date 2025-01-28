@@ -6,24 +6,21 @@ const router = express.Router();
 
 router.route('/cart')
 .get((req,res,next) =>{
-
+    productMethods.getCart(req,res,next);
 })
 .delete((req,res,next) =>{
 
 });
 
 router.route('/cart/:id')
-.get((req,res,next) =>{
-
-})
 .post((req,res,next) =>{
-
+    productMethods.addProductToCart(req,res,next);
 })
 .patch((req,res,next) =>{
-
+    productMethods.patchProductToCart(req,res,next);
 })
 .delete((req,res,next) =>{
-
+    productMethods.deleteProductOfCart(req,res,next);
 });
 
 router.route('/sell')
