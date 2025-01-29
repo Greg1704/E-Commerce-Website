@@ -60,7 +60,7 @@ router.route('/payment_method')
 
 router.route('/product')
 .get((req,res,next) =>{
-
+    productMethods.getAllProducts(req,res,next);
 })
 .post((req,res,next) =>{
     productMethods.postProduct(req,res,next);

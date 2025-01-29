@@ -4,6 +4,12 @@ import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import CustomError from "../utils/CustomError.js";
 
 export const getAllProducts = asyncErrorHandler(async (req,res,next) => {
+    const allProducts = await products.find();
+
+    console.log(allProducts);
+    res.status(200).json({
+            allProducts
+    })
 
 })
 
@@ -24,9 +30,9 @@ export const getProduct = asyncErrorHandler(async (req,res,next) => {
 })
 
 export const postProduct = asyncErrorHandler(async (req,res,next) => {
-    const {name,description,review: review,picture} = req.body;
+    const {name, price, description,review: review,picture} = req.body;
 
-    const productData = { name, description };
+    const productData = { name, price,description };
 
     if (review) productData.review = review;
     if (picture) productData.picture = picture;

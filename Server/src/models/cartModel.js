@@ -17,6 +17,14 @@ const cartSchema = new mongoose.Schema({
                 ammount:{
                     type: Number,
                     required: [true, "Product ammount is a required field"]
+                },
+                price:{
+                    type: Number,
+                    required: [true, "Price is a required field"]
+                },
+                total:{
+                    type: Number,
+                    required: [true, "Total is a required field"]
                 }
             })
         ],

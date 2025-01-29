@@ -33,14 +33,15 @@ const app = express();
 connectDB(app);
 
 app.use(cors({
-    origin:"NO LO SE POR EL MOMENTO XD",
+    origin:'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'], //Investigar mas sobre los headers de CORS
+    credentials: true
 }));
 
 app.use(express.json());
-app.use(adminRoute,authenticateToken,adminRoutes);
-app.use(clientRoute,authenticateToken,clientRoutes);
+app.use(adminRoute,adminRoutes); //(adminRoute,authenticateToken,adminRoutes);
+app.use(clientRoute,clientRoutes); //(clientRoute,authenticateToken,clientRoutes)
 app.use(userRoute,userRoutes);
 app.all('*',(req,res,next) =>{
     const err = new CustomError(`Can't find ${req.originalUrl} on the server!!!`, 404);

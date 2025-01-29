@@ -7,6 +7,7 @@ export const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; //Separamos el token del Bearer
 
+
     if (!token){
         const error = new CustomError('Access denied, lack of token',401);
         return next(error);

@@ -1,6 +1,7 @@
 import CustomError from "../utils/CustomError.js";
 
 const devErrors = (res,error) =>{
+    console.log("/kill please")
     res.status(error.statusCode).json({
         status: error.statusCode,
         message: error.message,
