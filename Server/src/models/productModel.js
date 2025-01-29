@@ -7,6 +7,14 @@ const productSchema = new mongoose.Schema({
         minlength: [10, "Name must be at least 11 characters"],
         maxlength: [60, "Name must be at most 35 characters"],
     },
+    price: {
+        type: Number,
+        required: [true, "A price is required"],
+        validate:{ 
+            validator: (value) => value>0,
+            message: "Price cannot be a negative number"
+        }
+    },
     description:{
         type: String,
         required: [false],
