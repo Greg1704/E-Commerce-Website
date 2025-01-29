@@ -94,3 +94,88 @@ body {
   padding-top: 100px; /* Ajusta este valor según la altura total de la barra */
 }
 
+/* Ocultar los botones de incremento y decremento del input de tipo number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Contenedor de los productos del carrito */
+/* Contenedor de los productos del carrito */
+.cart-items {
+  height: 75vh; /* 3/4 de la altura de la ventana */
+  overflow-y: auto; /* Permite desplazamiento si hay muchos productos */
+  padding: 10px;
+}
+
+/* Estilo para cada elemento del carrito */
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Espacio entre ítems */
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  height: 80px; /* Ajustada la altura de cada item */
+}
+
+/* Contenedor izquierdo: Imagen y detalles del producto */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px; /* Separación entre la información y la parte derecha */
+}
+
+/* Información de producto: nombre, precio, total */
+.product-info .product-name {
+  font-weight: bold;
+}
+
+.product-info .price-total {
+  display: flex;
+  gap: 15px; /* Espacio entre precio y total */
+  align-items: center;
+}
+
+/* Contenedor de la derecha (cantidad y eliminar) */
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espacio entre la cantidad y el botón de eliminar */
+  align-items: flex-end; /* Alinear a la derecha */
+}
+
+/* Control de cantidad y botón de eliminar */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.quantity-control button {
+  padding: 5px;
+  font-size: 18px;
+}
+
+.quantity-control input {
+  width: 50px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+/* Botón de eliminar */
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
