@@ -1,54 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import products from '../data/products';
 
 const ProductPage = () => {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === parseInt(id));
-
-  // Estado para la cantidad seleccionada
+  const { id } = useParams(); // Debe ser "id" porque así está en la ruta
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
-  // Funciones para aumentar o disminuir la cantidad
+  console.log("ID obtenido desde useParams:", id);
+
+  useEffect(() => {
+    const storedProducts = JSON.parse(localStorage.getItem('products')) || [];
+    console.log("Productos en localStorage:", storedProducts);
+
+    // Comparar correctamente con `_id`, convirtiéndolo en string para evitar errores de tipo
+    const foundProduct = storedProducts.find((p) => String(p._id) === id);
+    console.log("Producto encontrado:", foundProduct);
+
+    if (foundProduct) {
+      setProduct(foundProduct);
+    }
+  }, [id]);
+
+  if (!product) {
+    return <div>Producto no encontrado</div>;
+  }
+
   const increment = () => setQuantity(quantity + 1);
   const decrement = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
-
-  // Manejo del cambio directo en el input
   const handleQuantityChange = (e) => {
     const value = Math.max(1, parseInt(e.target.value) || 1);
     setQuantity(value);
   };
 
-  // Función para agregar al carrito
   const addToCart = () => {
-    // Aquí deberías implementar la lógica para agregar al carrito
     console.log(`Producto ${product.name} agregado al carrito con ${quantity} unidades.`);
   };
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
-
   return (
-    <div className="product-page">
+    <div className="product-container">
       <h1>{product.name}</h1>
       <p className="product-description">{product.description}</p>
       <p className="product-price">Price: ${product.price.toFixed(2)}</p>
-
-      {/* Contenedor para los detalles y botones */}
+  
       <div className="product-details">
         <div className="product-info">
-          {/* Imagen del producto */}
           <img src={product.picture} alt={product.name} className="product-image" />
-          
-          {/* Nombre y precio del producto */}
           <div className="price-total">
             <span>Precio: ${product.price}</span>
             <span>Total: ${product.price * quantity}</span>
           </div>
         </div>
-
-        {/* Contenedor para los botones de cantidad y agregar al carrito */}
+  
         <div className="quantity-and-add" style={{ display: 'flex', alignItems: 'center' }}>
           <div className="quantity-control" style={{ display: 'flex', alignItems: 'center' }}>
             <button onClick={decrement}>-</button>
@@ -61,17 +63,16 @@ const ProductPage = () => {
             />
             <button onClick={increment}>+</button>
           </div>
-
-          {/* Botón para agregar al carrito */}
+  
           <button onClick={addToCart} className="add-to-cart-button" style={{ marginLeft: '20px' }}>
             Agregar al carrito
           </button>
         </div>
       </div>
-
+  
       <h2>Reviews</h2>
       <div className="product-reviews">
-        {product.review.length > 0 ? (
+        {product.review?.length > 0 ? (
           product.review.map((r, index) => (
             <div key={index} className="review">
               <h3>{r.Title}</h3>
@@ -83,7 +84,7 @@ const ProductPage = () => {
         )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default ProductPage;

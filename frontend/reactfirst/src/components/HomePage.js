@@ -18,7 +18,7 @@ const HomePage = () => {
 
   // Cargar productos al montar el componente
   useEffect(() => {
-    fetchProducts().catch(err => console.log('Error capturado:', err));;
+      fetchProducts();
   }, []);
 
   const filteredProducts = products.filter(product =>
@@ -27,9 +27,6 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* Botón para recargar productos */}
-      <button onClick={fetchProducts}>Home</button>
-
       {/* Contenedor de productos */}
       <div className="product-grid">
         {filteredProducts.map(product => (

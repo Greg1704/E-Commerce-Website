@@ -185,4 +185,11 @@ input[type="number"] {
   cursor: pointer;
 }
 
-
+.product-container {
+  background-color: white; /* Fondo blanco */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados */
+  max-width: 800px; /* Ancho máximo */
+  margin: 50px auto; /* Centrado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
